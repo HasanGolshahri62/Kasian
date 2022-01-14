@@ -7,15 +7,16 @@ import { IonicModule } from '@ionic/angular';
 import { CompanySettingPageRoutingModule } from './company-setting-routing.module';
 
 import { CompanySettingPage } from './company-setting.page';
-import { FormToolbarComponent } from '../../../GeneralComponent/form-toolbar/form-toolbar.component';
+import { FormToolbarModule } from '../../../GeneralComponent/form-toolbar/form-toolbar.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    FormToolbarModule,
     CompanySettingPageRoutingModule
   ],
-  declarations: [CompanySettingPage,FormToolbarComponent]
+  declarations: [CompanySettingPage]
 })
 export class CompanySettingPageModule {}
