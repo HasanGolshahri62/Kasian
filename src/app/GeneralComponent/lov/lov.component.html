@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-button (click)="lovClick('Ok')">Ok</ion-button>
+  <ion-button (click)="lovClick('Cancel')">Cancel</ion-button>
+  <ion-text></ion-text>
+</ion-header>
+<ion-content>
+  <ion-grid>
+    <ion-row >
+      <ion-col [appBorderControl]="'Grid,head'" *ngFor="let Column of Columns" [style.display]="(Column.Hidden)?'none':'block'">
+        <ion-text >{{Column.Title}}</ion-text>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngFor="let currentRow of ListData;let currentIndex=index" (click)="RowGridClick(currentIndex)" >
+      <ion-col [appBorderControl]="'Grid,row'" *ngFor="let Column of Columns" [style.display]="(Column.Hidden)?'none':'block'">
+        <ion-text>{{currentRow[Column.Name]}}</ion-text>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+
+
