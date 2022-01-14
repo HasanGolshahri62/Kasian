@@ -7,15 +7,16 @@ import { IonicModule } from '@ionic/angular';
 import { BehaviorSettingPageRoutingModule } from './behavior-setting-routing.module';
 
 import { BehaviorSettingPage } from './behavior-setting.page';
-import { FormToolbarComponent } from 'src/app/GeneralComponent/form-toolbar/form-toolbar.component';
+import { FormToolbarModule } from '../../../GeneralComponent/form-toolbar/form-toolbar.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    FormToolbarModule,
     BehaviorSettingPageRoutingModule
   ],
-  declarations: [BehaviorSettingPage,FormToolbarComponent]
+  declarations: [BehaviorSettingPage]
 })
 export class BehaviorSettingPageModule {}
