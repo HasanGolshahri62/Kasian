@@ -1,0 +1,53 @@
+<ion-header>
+  <ion-toolbar>
+    <app-form-toolbar [toolbarInfo]="toolbar" (FormModeChange)="FormModeChanged($event)" (SaveClick)="saveForm()"
+      [CrudDisplay]="crudDisplay" (EditClick)="editForm()" (CancelClick)="CancelClicked()"></app-form-toolbar>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size-xl="2" size-lg="2" size-md="4" size-sm="6" size-xs="12" offset-xl="2" offset-lg="2">
+        <ion-item>
+          <ion-text>Save mode : </ion-text>
+          <ion-select [(ngModel)]="bhrSetting.SaveModeName" [disabled]="!IsFormActive"
+            (ionChange)="saveModeChange($event)">
+            <ion-select-option>Local</ion-select-option>
+            <ion-select-option>My server</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col size-xl="3" size-lg="3" size-md="4" size-sm="6" size-xs="12">
+        <ion-item>
+          <ion-text>Url Main address : </ion-text>
+          <ion-input [(ngModel)]="bhrSetting.MainUrlAddress"
+            [disabled]="bhrSetting.SaveModeName == 'Local' || !IsFormActive"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size-xl="3" size-lg="3" size-md="4" size-sm="6" size-xs="12" >
+        <ion-item>
+          <ion-text>Navigator number row : </ion-text>
+          <ion-input type="number" [(ngModel)]="bhrSetting.NavigatorPageSize" [disabled]="!IsFormActive"></ion-input>
+        </ion-item>
+      </ion-col>
+      
+    </ion-row>
+    <ion-row>
+      <ion-col size-xl="4" size-lg="4" size-md="6" size-sm="6" size-xs="12" offset-xl="4" offset-lg="4" offset-md="3">
+        
+        <ion-radio-group [(ngModel)]="bhrSetting.IsRecordVoice">
+          <ion-text style="padding: 10px;margin-top: 10px;">Is voice recorded? </ion-text>
+          
+            <ion-text style="padding: 10px;" >Yes</ion-text>
+            <ion-radio [disabled]="!IsFormActive" value="1"></ion-radio>
+            <ion-text style="padding: 10px;" >No</ion-text>
+            <ion-radio [disabled]="!IsFormActive" value="0"></ion-radio>
+          
+        </ion-radio-group>
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
