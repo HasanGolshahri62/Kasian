@@ -20,7 +20,7 @@ export class BankFirstCoursePage extends BasicFormBase implements OnInit {
   BankFirstNav: {Id: number, BankDefineId: number,Price: number,BankAccountCode: string,BankName:string}[] = [];
 
   constructor(public userSetting: GraphicUserSettingService,public crudManager: CrudManagerService,
-    private appRef: ApplicationRef,private mdlCtrl: ModalController,private bhvSetting: BehaviorUserSettingService) { 
+    private appRef: ApplicationRef,private mdlCtrl: ModalController,public bhvSetting: BehaviorUserSettingService) { 
     super();
     this.gridSetting.FieldSetting = [{Name:'Price',MinSize: userSetting.MinimizeGridSize,MaxSize:0}];
     this.gridSetting.FieldSetting.push({Name:'Bank Name',MinSize: userSetting.MinimizeGridSize,MaxSize:0});
