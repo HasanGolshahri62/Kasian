@@ -32,7 +32,7 @@ export class PaymentPage extends BasicFormBase implements OnInit {
   PaymentNav: { Id: number, Date: string, Serial: string }[] = [];
 
   constructor(public userSetting: GraphicUserSettingService, public crudManager: CrudManagerService,
-    private appRef: ApplicationRef, private mdlCtrl: ModalController, private behaviorUser: BehaviorUserSettingService) { 
+    private appRef: ApplicationRef, private mdlCtrl: ModalController, public behaviorUser: BehaviorUserSettingService) { 
     super();
     this.Payment = { Id: null, Serial: '', Date: '', PersonId: null, RegardId: null, PersonName: '', RegardName: '', Description: '', PaymentDtl: [] };
     this.MasterRow = this.Payment;
