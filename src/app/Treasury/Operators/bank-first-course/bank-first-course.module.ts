@@ -4,23 +4,23 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { BankFirstCoursePageRoutingModule } from './bank-first-course-routing.module';
+import { DefineBankPageRoutingModule } from './define-bank-routing.module';
 
-import { BankFirstCoursePage } from './bank-first-course.page';
-import { FormToolbarComponent } from '../../../GeneralComponent/form-toolbar/form-toolbar.component';
-import { GridViewComponent } from '../../../GeneralComponent/grid-view/grid-view.component';
-import { BorderControlDirective } from '../../../TotalDirectives/GraphicalDirectives/border-control.directive';
-import { LovComponent } from '../../../GeneralComponent/lov/lov.component';
+import { DefineBankPage } from './define-bank.page';
 import { CrudManagerService } from '../../../TotalServices/ManageCrud/crud-manager.service';
+import { FormToolbarModule } from '../../../GeneralComponent/form-toolbar/form-toolbar.module';
+import { GridViewComponentModule } from '../../../GeneralComponent/grid-view/grid-view.module';
+import { BorderControlModule } from '../../../TotalDirectives/GraphicalDirectives/border-control.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    BankFirstCoursePageRoutingModule
+    FormToolbarModule,GridViewComponentModule,BorderControlModule,
+    DefineBankPageRoutingModule
   ],
-  declarations: [BankFirstCoursePage,FormToolbarComponent,GridViewComponent, BorderControlDirective,LovComponent],
+  declarations: [DefineBankPage],
   providers:[CrudManagerService]
 })
-export class BankFirstCoursePageModule {}
+export class DefineBankPageModule {}
