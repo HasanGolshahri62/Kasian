@@ -1,0 +1,7 @@
+{
+  "name": "KasianFinancial",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}
