@@ -9,11 +9,10 @@ import * as CordovaSQLiteDriver from 'localforage-cordovasqlitedriver';
 import { Drivers } from '@ionic/storage';
 
 import { DefinePersonPage } from './define-person.page';
-import { FormToolbarComponent } from 'src/app/GeneralComponent/form-toolbar/form-toolbar.component';
-import { GridViewComponent } from 'src/app/GeneralComponent/grid-view/grid-view.component';
-import { BorderControlDirective } from 'src/app/TotalDirectives/GraphicalDirectives/border-control.directive';
-import { CrudManagerService } from 'src/app/TotalServices/ManageCrud/crud-manager.service';
-import { ContentControlDirective } from 'src/app/TotalDirectives/GraphicalDirectives/content-control.directive';
+import { CrudManagerService } from '../../../TotalServices/ManageCrud/crud-manager.service';
+import { FormToolbarModule } from '../../../GeneralComponent/form-toolbar/form-toolbar.module';
+import { GridViewComponentModule } from '../../../GeneralComponent/grid-view/grid-view.module';
+import { BorderControlModule } from '../../../TotalDirectives/GraphicalDirectives/border-control.module';
 
 
 @NgModule({
@@ -21,11 +20,12 @@ import { ContentControlDirective } from 'src/app/TotalDirectives/GraphicalDirect
     CommonModule,
     FormsModule,
     IonicModule,
+    FormToolbarModule,GridViewComponentModule,BorderControlModule,
     DefinePersonPageRoutingModule,IonicStorageModule.forRoot({
       driverOrder: [CordovaSQLiteDriver._driver,Drivers.IndexedDB]
     })
   ],
-  declarations: [DefinePersonPage,FormToolbarComponent,GridViewComponent, BorderControlDirective],
+  declarations: [DefinePersonPage],
   providers:[CrudManagerService]
 })
 export class DefinePersonPageModule {}
