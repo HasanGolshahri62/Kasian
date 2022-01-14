@@ -1,0 +1,36 @@
+<ion-header>
+  <app-form-toolbar [toolbarInfo]="toolbar" (FormModeChange)="FormModeChanged($event)"
+  (NewClick)="NewMasterClicked()" (SaveClick)="saveForm(crudManager)" 
+   (DeleteClick)="DeleteForm(crudManager)" (EditClick)="EditClicked()" (CancelClick)="CancelClicked()"
+   (VoiceRecorder)="getTextVoiceAndDo($event,crudManager)"
+  ></app-form-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size-lg="3" size-md="4" size-sm="6" size-xs="12" offset-lg="3" offset-md="2">
+        <ion-item>
+          <ion-label>Name</ion-label>
+          <ion-input [readonly]="!IsFormActive" [(ngModel)]="MasterRow.Name"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size-lg="3" size-md="4" size-sm="6" size-xs="12">
+        <ion-item>
+          <ion-label>Code</ion-label>
+          <ion-input [readonly]="!IsFormActive" [(ngModel)]="MasterRow.Code"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <app-grid-view [GridSetting]="gridSetting" (PageClicked)="GoToPage($event,crudManager)">
+    <ion-row>
+      <ion-col [appBorderControl]="'Grid,head'" size-xl="2" size-lg="3" size-md="4" size-sm="6" size-xs="6" offset-lg="3" offset-md="2" offset-xl="4">Name</ion-col>
+      <ion-col [appBorderControl]="'Grid,head'" size-lg="3" size-md="4" size-sm="6" size-xs="6">Code</ion-col>
+    </ion-row>
+    <ion-row *ngFor="let navRow of RegardNav" (click)="RegardClick(navRow.Id)">
+      <ion-col [appBorderControl]="'Grid,row'" size-xl="2" size-lg="3" size-md="4" size-sm="6" size-xs="6" offset-lg="3" offset-md="2" offset-xl="4">{{ navRow.Name }}</ion-col>
+      <ion-col [appBorderControl]="'Grid,row'" size-lg="3" size-md="4" size-sm="6" size-xs="6">{{ navRow.Code }}</ion-col>
+    </ion-row>
+  </app-grid-view>
+</ion-content>
