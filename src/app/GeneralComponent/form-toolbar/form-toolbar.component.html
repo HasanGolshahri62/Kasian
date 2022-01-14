@@ -1,0 +1,42 @@
+<ion-toolbar>
+  <ion-buttons >
+    <ion-menu-button></ion-menu-button>
+    <ion-button (click)="closeTab()">
+      <ion-icon name="close-outline"></ion-icon>
+    </ion-button>
+    
+  </ion-buttons>
+  <ion-buttons slot="end" [ngStyle]="{display:(CrudDisplay.All)?'block':'none'}" >
+    <ion-button [ngStyle]="{display:(srvDevice.IsCompressMode)?'none':''}" [disabled]="IsFormActive"
+       *ngIf="CrudDisplay.New" (click)="NewClicked()">New
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-button>
+    <ion-button [ngStyle]="{display:(srvDevice.IsCompressMode)?'none':''}" [disabled]="IsFormActive"
+    *ngIf="CrudDisplay.Edit" (click)="EditClicked()">Edit
+      <ion-icon name="create-outline"></ion-icon>
+    </ion-button>
+    <ion-button [ngStyle]="{display:(srvDevice.IsCompressMode)?'none':''}" [disabled]="IsFormActive"
+    *ngIf="CrudDisplay.Delete" (click)="DeleteClicked()">Delete
+      <ion-icon name="trash-outline"></ion-icon>
+    </ion-button>
+    <ion-button [ngStyle]="{display:(srvDevice.IsCompressMode)?'none':''}" [disabled]="!IsFormActive"
+    *ngIf="CrudDisplay.Save" (click)="SaveClicked()">Save
+      <ion-icon name="save-outline"></ion-icon>
+    </ion-button>
+    <ion-button [ngStyle]="{display:(srvDevice.IsCompressMode)?'none':''}" [disabled]="!IsFormActive"
+    (click)="CancelClicked()">Cancel
+      <ion-icon name="hand-left-outline"></ion-icon>
+    </ion-button>
+    <ion-button [ngStyle]="{display:(srvDevice.IsCompressMode)?'none':''}" disabled >More
+      <ion-icon name="briefcase-outline"></ion-icon>
+    </ion-button>
+    <ion-button [ngStyle]="{display:(srvDevice.IsCompressMode && bhSetting.IsRecordVoice=='1')?'none':''}"
+      (click)="VoiceClicked()" >Voice
+      <ion-icon name="mic-outline"></ion-icon>
+    </ion-button>
+
+    <ion-button [ngStyle]="{display:(srvDevice.IsCompressMode)?'':'none'}" (click)="CompressButtonClick()">
+      <ion-icon name="apps-outline"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+</ion-toolbar>
