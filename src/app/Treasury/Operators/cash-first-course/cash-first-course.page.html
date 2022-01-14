@@ -1,0 +1,55 @@
+<ion-header>
+  <app-form-toolbar [toolbarInfo]="toolbar" (FormModeChange)="FormModeChanged($event)"
+  (NewClick)="NewMasterClicked()" (SaveClick)="saveForm(crudManager)" (CancelClick)="CancelClicked()"
+   (DeleteClick)="DeleteForm(crudManager)" (EditClick)="EditClicked()" (VoiceRecorder)="getTextVoiceAndDo($event,crudManager)"></app-form-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size-lg="4" size-md="4" size-sm="6" size-xs="12" offset-lg="1">
+        <ion-item>
+          <ion-label>Cash Code</ion-label>
+          <ion-input [readonly]="!IsFormActive" [(ngModel)]="MasterRow.CashCode"></ion-input>
+          <ion-button [disabled]="!IsFormActive" (click)="ShowCashListLov()"><ion-icon name="list"></ion-icon></ion-button>
+        </ion-item>
+      </ion-col>
+      <ion-col size-lg="3" size-md="4" size-sm="6" size-xs="12">
+        <ion-item>
+          <ion-label>Cash Name</ion-label>
+          <ion-input [readonly]="!IsFormActive" [(ngModel)]="MasterRow.CashName"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size-lg="3" size-md="4" size-sm="6" size-xs="12">
+        <ion-item>
+          <ion-label>Price</ion-label>
+          <ion-input [readonly]="!IsFormActive" [(ngModel)]="MasterRow.Price"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <app-grid-view [GridSetting]="gridSetting" (PageClicked)="GoToPage($event,crudManager)">
+    <ion-row class="ion-hide-sm-down">
+      <ion-col [appBorderControl]="'Grid,head'" size-xl="2" size-lg="3" size-md="4" offset-lg="1" offset-xl="3"><ion-text>Cash Name</ion-text></ion-col>
+      <ion-col [appBorderControl]="'Grid,head'" size-xl="2" size-lg="4" size-md="4" ><ion-text>Cash Code</ion-text></ion-col>
+      <ion-col [appBorderControl]="'Grid,head'" size-xl="2" size-lg="3" size-md="4"><ion-text>Price</ion-text></ion-col>
+    </ion-row>
+    <ion-row class="ion-hide-sm-down" *ngFor="let currentCashFirst of CashFirstNav" (click)="CashFirstCourseClick(currentCashFirst.Id)">
+      <ion-col [appBorderControl]="'Grid,row'" size-xl="2" size-lg="3" size-md="4" offset-lg="1" offset-xl="3"><ion-text>{{currentCashFirst.CashName}}</ion-text></ion-col>
+      <ion-col [appBorderControl]="'Grid,row'" size-xl="2" size-lg="4" size-md="4" ><ion-text>{{currentCashFirst.CashCode}}</ion-text></ion-col>
+      <ion-col [appBorderControl]="'Grid,row'" size-xl="2" size-lg="3" size-md="4"><ion-text>{{currentCashFirst.Price}}</ion-text></ion-col>
+    </ion-row>
+
+    <ion-row class="ion-hide-sm-up" appBorderControl *ngFor="let currentCashFirst of CashFirstNav" (click)="CashFirstCourseClick(currentCashFirst.Id)">
+        <ion-col size-sm="6" size-xs="12">
+           <ion-text>Cash Name</ion-text><ion-text>{{currentCashFirst.CashName}}</ion-text>
+        </ion-col>
+        <ion-col size-sm="6" size-xs="12">
+          <ion-text>Cash Code</ion-text><ion-text>{{currentCashFirst.CashCode}}</ion-text>
+        </ion-col>
+        <ion-col size-sm="6" size-xs="12">
+          <ion-text>Price</ion-text><ion-text>{{currentCashFirst.Price}}</ion-text>
+        </ion-col>
+    </ion-row>
+  </app-grid-view>
+</ion-content>
