@@ -1,0 +1,164 @@
+<ion-header>
+  <app-form-toolbar [toolbarInfo]="toolbar" (FormModeChange)="FormModeChanged($event)" (NewClick)="NewMasterClicked()"
+  (SaveClick)="saveForm(crudManager)"  (EditClick)="EditClicked()" (DeleteClick)="DeleteForm(crudManager)"
+  (CancelClick)="CancelClicked()" (VoiceRecorder)="getTextVoiceAndDo($event,crudManager)"></app-form-toolbar>
+</ion-header>
+
+<ion-content>
+<ion-grid >
+  <ion-row>
+    <ion-col size-lg="2" size-md="3" size-sm="6" size-xs="12"  offset-lg="2">
+      <ion-item>
+        <ion-label>Serial</ion-label>
+        <ion-text>{{MasterRow.Serial}}</ion-text>
+      </ion-item>
+    </ion-col>
+    <ion-col size-lg="2" size-md="3" size-sm="6" size-xs="12">
+      <ion-item>
+        <ion-label>Date</ion-label>
+        <ion-datetime [readonly]="!IsFormActive" [(ngModel)]="MasterRow.Date" [displayFormat]="userSetting.DateDisplayFormat"></ion-datetime>
+      </ion-item>
+    </ion-col>
+    <ion-col size-lg="2" size-md="3" size-sm="6" size-xs="12">
+      <ion-item>
+        <ion-label>Person</ion-label>
+        <ion-input [readonly]="!IsFormActive" [ngModel]="MasterRow.PersonName" (change)="GetValueFromLovWithCode($event,'Person')"></ion-input>
+        <ion-button [disabled]="!IsFormActive" (click)="ShowPersonListLov()"><ion-icon name="list"></ion-icon></ion-button>
+      </ion-item>
+    </ion-col>
+    <ion-col size-lg="2" size-md="3" size-sm="6" size-xs="12">
+      <ion-item>
+        <ion-label>Regard</ion-label>
+        <ion-input [readonly]="!IsFormActive" [ngModel]="MasterRow.RegardName" (change)="GetValueFromLovWithCode($event,'Regard')"></ion-input>
+        <ion-button [disabled]="!IsFormActive" (click)="ShowRegardListLov()"><ion-icon name="list"></ion-icon></ion-button>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col size="12">
+      <ion-buttons>
+        <ion-button (click)="btnGridDtlClick('Add')" [disabled]="!IsFormActive">
+          <ion-icon name="add-outline"></ion-icon>
+        </ion-button>
+        <ion-button (click)="btnGridDtlClick('Remove')" [disabled]="!IsFormActive">
+          <ion-icon name="remove-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      <app-grid-view [GridSetting]="gridSettingPayment">
+        <ion-row class="ion-hide-md-down">
+          <ion-col [appBorderControl]="'Grid,head'" size-xl="1" size-lg="1" size-md="1">
+            <ion-text>Number</ion-text>
+          </ion-col>
+          <ion-col [appBorderControl]="'Grid,head'" size-xl="3" size-lg="3" size-md="3">
+            <ion-text>Cash Name</ion-text>
+          </ion-col>
+          <ion-col [appBorderControl]="'Grid,head'" size-xl="3" size-lg="3" size-md="3">
+            <ion-text>Bank Name</ion-text>
+          </ion-col>
+          <ion-col [appBorderControl]="'Grid,head'" size-xl="2" size-lg="2" size-md="2">
+            <ion-text>Price</ion-text>
+          </ion-col>
+          <ion-col [appBorderControl]="'Grid,head'" size-xl="3" size-lg="3" size-md="3">
+            <ion-text>Description</ion-text>
+          </ion-col>
+        </ion-row>
+        <ion-row class="ion-hide-md-down" *ngFor="let paymentDtl of MasterRow.PaymentDtl;let currentIndex = index"
+            (click)="rowGridDtlClick(paymentDtl)">
+            <ion-col [appBorderControl]="'Grid,row'" size-xl="1" size-lg="1" size-md="1"
+              >
+              <ion-text>{{currentIndex + 1}}</ion-text>
+            </ion-col>
+            <ion-col [appBorderControl]="'Grid,row'" size-xl="3" size-lg="3" size-md="3">
+              <ion-grid class="ion-no-padding ion-no-marging">
+                <ion-row>
+                  <ion-col size="9">
+                    <ion-input [readonly]="!IsFormActive" [ngModel]="paymentDtl.CashName" (change)="GetValueFromLovWithCode($event,'Cash',paymentDtl)"></ion-input>
+                  </ion-col>
+                  <ion-col size="3">
+                    <ion-button [disabled]="!IsFormActive" (click)="ShowCashListLov(paymentDtl)"><ion-icon name="list"></ion-icon></ion-button>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-col>
+            <ion-col [appBorderControl]="'Grid,row'" size-xl="3" size-lg="3" size-md="3"
+              class="ion-justify-content-around">
+              <ion-grid class="ion-no-padding ion-no-marging">
+                <ion-row>
+                  <ion-col size="9">
+                    <ion-input [readonly]="!IsFormActive" [ngModel]="paymentDtl.BankName" (change)="GetValueFromLovWithCode($event,'Bank',paymentDtl)"></ion-input>
+                  </ion-col>
+                  <ion-col size="3">
+                    <ion-button [disabled]="!IsFormActive" (click)="ShowBankListLov(paymentDtl)"><ion-icon name="list"></ion-icon></ion-button>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-col>
+            <ion-col [appBorderControl]="'Grid,row'" size-xl="2" size-lg="2" size-md="2">
+              <ion-input [readonly]="!IsFormActive" [(ngModel)]="paymentDtl.Price"></ion-input>
+            </ion-col>
+            <ion-col [appBorderControl]="'Grid,row'" size-xl="3" size-lg="3" size-md="3">
+              <ion-input [readonly]="!IsFormActive" [(ngModel)]="paymentDtl.Description"></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row class="ion-hide-md-up" appBorderControl
+            *ngFor="let paymentDtl of MasterRow.PaymentDtl;let currentIndex = index">
+            <ion-col size-sm="6" size-xs="12">
+              <ion-item>
+                <ion-text>Number:</ion-text>
+                <ion-text>{{currentIndex}}</ion-text>
+              </ion-item>
+            </ion-col>
+            <ion-col size-sm="6" size-xs="12">
+              <ion-item>
+                <ion-text>Cash Name:</ion-text>
+                <ion-input [readonly]="!IsFormActive" (dblclick)="ShowCashListLov(paymentDtl)" [ngModel]="paymentDtl.CashName"
+                (change)="GetValueFromLovWithCode($event,'Cash',paymentDtl)"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size-sm="6" size-xs="12">
+              <ion-item>
+                <ion-text>Bank Name:</ion-text>
+                <ion-input [readonly]="!IsFormActive" (dblclick)="ShowBankListLov(paymentDtl)" [ngModel]="paymentDtl.BankName"
+                (change)="GetValueFromLovWithCode($event,'Bank',paymentDtl)"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size-sm="6" size-xs="12">
+              <ion-item>
+                <ion-text>Price:</ion-text>
+                <ion-input [(ngModel)]="paymentDtl.Price"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size-sm="6" size-xs="12">
+              <ion-item>
+                <ion-text>Description:</ion-text>
+                <ion-textarea [(ngModel)]="paymentDtl.Description"></ion-textarea>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </app-grid-view>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size-lg="6" size-md="10" size-sm="12" size-xs="12" offset-lg="3" offset-md="1">
+        <ion-item>
+          <ion-label>Description</ion-label>
+          <ion-textarea [(ngModel)]="MasterRow.Description"></ion-textarea>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <app-grid-view [GridSetting]="gridSettingNav" (PageClicked)="GoToPage($event,crudManager)">
+    <ion-row>
+      <ion-col [appBorderControl]="'Grid,head'" size-xl="1" size-lg="3" size-md="4" size-sm="6" size-xs="6" offset-lg="3" offset-md="2"
+        offset-xl="4">Serial</ion-col>
+      <ion-col [appBorderControl]="'Grid,head'" size-xl="2" size-lg="2" size-md="3" size-sm="6" size-xs="6">Date</ion-col>
+    </ion-row>
+    <ion-row *ngFor="let currentNav of PaymentNav" (click)="NavClicked(currentNav)">
+      <ion-col [appBorderControl]="'Grid,row'" size-xl="1" size-lg="3" size-md="4" size-sm="6" size-xs="6" offset-lg="3" offset-md="2"
+      offset-xl="4">{{currentNav.Serial}}</ion-col>
+    <ion-col [appBorderControl]="'Grid,row'" size-xl="2" size-lg="2" size-md="3" size-sm="6" size-xs="6">
+      <ion-datetime readonly="true" [ngModel]="currentNav.Date" [displayFormat]="userSetting.DateDisplayFormat"></ion-datetime>
+    </ion-col>
+    </ion-row>
+  </app-grid-view>
+</ion-content>
