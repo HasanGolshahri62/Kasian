@@ -7,17 +7,18 @@ import { IonicModule } from '@ionic/angular';
 import { GraphicalSettingPageRoutingModule } from './graphical-setting-routing.module';
 
 import { GraphicalSettingPage } from './graphical-setting.page';
-import { FormToolbarComponent } from 'src/app/GeneralComponent/form-toolbar/form-toolbar.component';
-import { GridViewComponent } from 'src/app/GeneralComponent/grid-view/grid-view.component';
-import { BorderControlDirective } from 'src/app/TotalDirectives/GraphicalDirectives/border-control.directive';
+import { FormToolbarModule } from '../../../GeneralComponent/form-toolbar/form-toolbar.module';
+import { GridViewComponentModule } from '../../../GeneralComponent/grid-view/grid-view.module';
+import { BorderControlModule } from '../../../TotalDirectives/GraphicalDirectives/border-control.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    FormToolbarModule,GridViewComponentModule,BorderControlModule,
     GraphicalSettingPageRoutingModule
   ],
-  declarations: [GraphicalSettingPage,FormToolbarComponent,GridViewComponent, BorderControlDirective]
+  declarations: [GraphicalSettingPage]
 })
 export class GraphicalSettingPageModule {}
