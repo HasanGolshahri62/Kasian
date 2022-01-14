@@ -1,0 +1,176 @@
+<ion-header>
+  <ion-toolbar>
+    <app-form-toolbar [toolbarInfo]="toolbar" (FormModeChange)="FormModeChanged($event)"
+      (SaveClick)="saveForm(crudManager)" [CrudDisplay]="crudDisplay" (EditClick)="EditClicked()"
+      (CancelClick)="CancelClicked()"></app-form-toolbar>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size-xl="2" size-lg="3" size-md="4" size-sm="6" size-xs="12">
+        <ion-text>Back ground color : </ion-text>
+        <!-- <ion-buttons>
+          <ion-button (click)="btnColorClick('Add')" [disabled]="!IsFormActive">
+            <ion-icon name="add-outline"></ion-icon>
+          </ion-button>
+          <ion-button (click)="btnColorClick('Remove')" [disabled]="!IsFormActive">
+            <ion-icon name="remove-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons> -->
+        <!-- <div *ngFor="let currentColor of userSetting.MultiBackgroundColor;let index = index;"> -->
+        <input type="color" [disabled]="!IsFormActive" [value]="currentColor"
+          (change)="changeBackgroundColor($event,0)" />
+        <!-- </div> -->
+
+      </ion-col>
+      <ion-col size-xl="2" size-lg="3" size-md="4" size-sm="6" size-xs="12">
+        <ion-item>
+          <ion-text>Language : </ion-text>
+          <ion-input value="en-US" disabled ></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size-xl="2" size-lg="3" size-md="4" size-sm="6" size-xs="12">
+        <ion-item>
+          <ion-text>Direction</ion-text>
+          <ion-select value="ltr" disabled>
+            <ion-select-option value="ltr">Left to rigth</ion-select-option>
+            <ion-select-option value="rtl">Rigth to left</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col size-xl="2" size-lg="3" size-md="4" size-sm="6" size-xs="12">
+        <ion-text>Grid header back color</ion-text>
+        <input type="color" [(ngModel)]="userSetting.GridHeaderBackColor" [disabled]="!IsFormActive" />
+      </ion-col>
+      <ion-col size-xl="2" size-lg="3" size-md="4" size-sm="6" size-xs="12">
+        <ion-text>Grid rows back color</ion-text>
+        <input type="color" [(ngModel)]="userSetting.GridRowsBackColor" [disabled]="!IsFormActive" />
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size-xl="2" size-lg="3" size-md="4" size-sm="6" size-xs="12">
+        <ion-item>
+          <ion-text>Mini border width : </ion-text>
+          <ion-input type="number" [disabled]="!IsFormActive" [(ngModel)]="userSetting.GridBorderSetting.BorderWidth"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size-xl="2" size-lg="3" size-md="4" size-sm="6" size-xs="12">
+        <ion-text>Mini Border color</ion-text>
+        <input type="color" [disabled]="!IsFormActive" [(ngModel)]="userSetting.GridBorderSetting.BorderColor"/>
+      </ion-col>
+      <ion-col size-xl="3" size-lg="3" size-md="4" size-sm="6" size-xs="12">
+        <ion-item>
+          <ion-text>Mini Border style : </ion-text>
+          <ion-select [disabled]="!IsFormActive" [(ngModel)]="userSetting.GridBorderSetting.BorderStyle">
+            <ion-select-option>dashed</ion-select-option>
+            <ion-select-option>dotted</ion-select-option>
+            <ion-select-option>groove</ion-select-option>
+            <ion-select-option>solid</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col size-xl="2" size-lg="3" size-md="4" size-sm="6" size-xs="12">
+        <ion-item>
+          <ion-text>Header Border width : </ion-text>
+          <ion-input type="number" [disabled]="!IsFormActive" [(ngModel)]="userSetting.GridBorderHeaderSetting.BorderWidth"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size-xl="2" size-lg="3" size-md="4" size-sm="6" size-xs="12">
+        <ion-text>Header Border color</ion-text>
+        <input type="color" [disabled]="!IsFormActive" [(ngModel)]="userSetting.GridBorderHeaderSetting.BorderColor"/>
+      </ion-col>
+      <ion-col size-xl="3" size-lg="3" size-md="4" size-sm="6" size-xs="12">
+        <ion-item>
+          <ion-text>Header Border style : </ion-text>
+          <ion-select [disabled]="!IsFormActive" [(ngModel)]="userSetting.GridBorderHeaderSetting.BorderStyle">
+            <ion-select-option>dashed</ion-select-option>
+            <ion-select-option>dotted</ion-select-option>
+            <ion-select-option>groove</ion-select-option>
+            <ion-select-option>solid</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col size-xl="2" size-lg="3" size-md="4" size-sm="6" size-xs="12">
+        <ion-item>
+          <ion-text>Rows Border width : </ion-text>
+          <ion-input type="number" [disabled]="!IsFormActive" [(ngModel)]="userSetting.GridBorderRowSetting.BorderWidth"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size-xl="2" size-lg="3" size-md="4" size-sm="6" size-xs="12">
+        <ion-text>Rows Border color</ion-text>
+        <input type="color" [disabled]="!IsFormActive" [(ngModel)]="userSetting.GridBorderRowSetting.BorderColor"/>
+      </ion-col>
+      <ion-col size-xl="3" size-lg="3" size-md="4" size-sm="6" size-xs="12">
+        <ion-item>
+          <ion-text>Rows Border style : </ion-text>
+          <ion-select [disabled]="!IsFormActive" [(ngModel)]="userSetting.GridBorderRowSetting.BorderStyle">
+            <ion-select-option>dashed</ion-select-option>
+            <ion-select-option>dotted</ion-select-option>
+            <ion-select-option>groove</ion-select-option>
+            <ion-select-option>solid</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size-xl="2" size-lg="3" size-md="4" size-sm="6" size-xs="12">
+        <ion-item>
+          <ion-text>Year: </ion-text>
+          <ion-select [disabled]="!IsFormActive" [(ngModel)]="dateDisplayFormat.Year">
+            <ion-select-option value="YYYY">4 digits</ion-select-option>
+            <ion-select-option value="YY">2 digits</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col size-xl="2" size-lg="3" size-md="4" size-sm="6" size-xs="12">
+        <ion-item>
+          <ion-text>Month: </ion-text>
+          <ion-select [disabled]="!IsFormActive" [(ngModel)]="dateDisplayFormat.Month">
+            <ion-select-option value="M">Normal</ion-select-option>
+            <ion-select-option value="MM">leading zero</ion-select-option>
+            <ion-select-option value="MMM">short name</ion-select-option>
+            <ion-select-option value="MMMM">full name</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col size-xl="2" size-lg="3" size-md="4" size-sm="6" size-xs="12">
+        <ion-item>
+          <ion-text>Day: </ion-text>
+          <ion-select [disabled]="!IsFormActive" [(ngModel)]="dateDisplayFormat.Day">
+            <ion-select-option value="D">Normal</ion-select-option>
+            <ion-select-option value="DD">leading zero</ion-select-option>
+            <ion-select-option value="DDD">short name</ion-select-option>
+            <ion-select-option value="DDDD">full name</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col size-xl="2" size-lg="3" size-md="4" size-sm="6" size-xs="12">
+        <ion-item>
+          <ion-text>Separator: </ion-text>
+          <ion-input [disabled]="!IsFormActive" [(ngModel)]="dateDisplayFormat.Separator"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size-xl="3" size-lg="3" size-md="4" size-sm="6" size-xs="12">
+        <ion-item>
+          <ion-text>Receipt serial length : </ion-text>
+          <ion-input type="number" [disabled]="!IsFormActive" [(ngModel)]="userSetting.SerialFormat.ReceiptZeroLength"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size-xl="3" size-lg="3" size-md="4" size-sm="6" size-xs="12">
+        <ion-item>
+          <ion-text>Payment serial length : </ion-text>
+          <ion-input type="number" [disabled]="!IsFormActive" [(ngModel)]="userSetting.SerialFormat.PaymentZeroLength"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+
+      </ion-col>
+
+    </ion-row>
+  </ion-grid>
+</ion-content>
