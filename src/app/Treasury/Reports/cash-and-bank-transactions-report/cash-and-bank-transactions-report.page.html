@@ -1,0 +1,136 @@
+<ion-header>
+  <app-form-toolbar [CrudDisplay]="crudDisplay" [toolbarInfo]="toolbar"></app-form-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size-lg="3" size-md="4" size-sm="6" size-xs="12">
+        <ion-item>
+          <ion-label>Filter Field</ion-label>
+          <ion-select interface="popover" [(ngModel)]="filterList.FilterField" (ionChange)="filterFieldChange($event)">
+            <ion-select-option>Person</ion-select-option>
+            <ion-select-option>Regard</ion-select-option>
+            <ion-select-option>Bank</ion-select-option>
+            <ion-select-option>Cash</ion-select-option>
+            <ion-select-option>Date</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col size-lg="3" size-md="4" size-sm="6" size-xs="12">
+        <ion-item>
+          <ion-label>Filter type</ion-label>
+          <ion-select (ionChange)="filterTypeChange($event)" [(ngModel)]="filterList.FilterType">
+            <ion-select-option>Equal</ion-select-option>
+            <ion-select-option>BiggerThan</ion-select-option>
+            <ion-select-option>SmallerThan</ion-select-option>
+            <ion-select-option>Between</ion-select-option>
+            <ion-select-option>NoEqual</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col size-lg="2" size-md="4" size-sm="6" size-xs="12">
+        <ion-item>
+          <ion-input [(ngModel)]="filterList.FilterOne" *ngIf="filterList.FilterField != 'Date'" (change)="lovClicked(1,$event)"></ion-input>
+          <ion-datetime [(ngModel)]="filterList.FilterOne" *ngIf="filterList.FilterField == 'Date'"></ion-datetime>
+          <ion-button *ngIf="_isShowLov" (click)="lovClicked(1,null)">
+            <ion-icon name="list"></ion-icon>
+          </ion-button>
+        </ion-item>
+      </ion-col>
+      <ion-col size-lg="1" size-md="1" size-sm="1" size-xs="1">
+        <ion-item>
+        <ion-text *ngIf="_isBetween">And</ion-text>
+      </ion-item>
+      </ion-col>
+      <ion-col size-lg="2" size-md="4" size-sm="6" size-xs="12">
+        <ion-item *ngIf="_isBetween">
+          <ion-input [(ngModel)]="filterList.FilterTwo" *ngIf="filterList.FilterField != 'Date'" (change)="lovClicked(2,$event)"></ion-input>
+          <ion-datetime [(ngModel)]="filterList.FilterTwo" *ngIf="filterList.FilterField == 'Date'"></ion-datetime>
+          <ion-button *ngIf="_isShowLov && _isBetween" (click)="lovClicked(2,null)">
+            <ion-icon name="list"></ion-icon>
+          </ion-button>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size-lg="6" size-md="12" size-sm="12" size-xs="12">
+        <ion-item>
+          <ion-label>Group by</ion-label>
+          <ion-select multiple [(ngModel)]="filterList.GroupByList">
+            <ion-select-option>Person</ion-select-option>
+            <ion-select-option>Regard</ion-select-option>
+            <ion-select-option>Bank</ion-select-option>
+            <ion-select-option>Cash</ion-select-option>
+            <ion-select-option>Date</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col size-lg="1" size-md="1" size-sm="2" size-xs="6">
+        <ion-button (click)="MasterReportClick()">
+          <ion-icon name="checkmark-outline"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row [ngClass]="{'ion-hide-md-down':MasterColumnHeader.length>4,'ion-hide-lg-down':MasterColumnHeader.length>6}">
+        <ion-col [appBorderControl]="'Grid,head'" *ngFor="let header of MasterColumnHeader">
+          <ion-text>{{header}}</ion-text>
+        </ion-col>
+    </ion-row>
+    <ion-row *ngFor="let currentRow of MasterReport" (click)="MsrGridClick(currentRow)" 
+             [ngClass]="{'ion-hide-md-down':MasterColumnHeader.length>4, 'ion-hide-lg-down':MasterColumnHeader.length>6}">
+      <ion-col *ngFor="let header of MasterColumnHeader" [appBorderControl]="'Grid,row'">{{ currentRow[header] }}</ion-col>
+    </ion-row>
+    
+    <ion-row *ngIf="MasterReport.length>1" [ngClass]="{'ion-hide-md-down':MasterColumnHeader.length>4, 'ion-hide-lg-down':MasterColumnHeader.length>6}">
+      <ion-col>{{MasterFooter.ReceiptPrice}}</ion-col>
+      <ion-col>{{MasterFooter.PaymentPrice}}</ion-col>
+      <ion-col>{{MasterFooter.Title}}</ion-col>
+      <ion-col *ngFor="let row of MasterFooter.FakeColumns"></ion-col>
+    </ion-row>
+    <ion-row appBorderControl [ngClass]="{'ion-hide-lg-up':MasterColumnHeader.length>6, 'ion-hide-md-up':MasterColumnHeader.length>4 && MasterColumnHeader.length<=6}" 
+      *ngFor="let currentRow of MasterReport" (click)="MsrGridClick(currentRow)">
+      <ion-col size-sm="6" size-xs="12" *ngFor="let header of MasterColumnHeader">
+        <ion-text>{{header}} : </ion-text><ion-text>{{currentRow[header]}}</ion-text>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-button *ngIf="_isShowDetail" (click)="ShowDetailReport(currentMasterReport)">Show Transaction</ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="DetailReport.length>0" [appBorderControl]="'Grid,head'" class="ion-hide-md-down">
+      <ion-col>Type</ion-col>
+      <ion-col>Date</ion-col>
+      <ion-col>FormSerial</ion-col>
+      <ion-col>ReceiptPrice</ion-col>
+      <ion-col>PaymentPrice</ion-col>
+    </ion-row>
+    <ion-row *ngFor="let dtlRow of DetailReport" [appBorderControl]="'Grid,row'" class="ion-hide-md-down">
+      <ion-col>{{dtlRow.Type}}</ion-col>
+      <ion-col>{{dtlRow.Date}}</ion-col>
+      <ion-col>{{dtlRow.FormSerial}}</ion-col>
+      <ion-col>{{dtlRow.ReceiptPrice}}</ion-col>
+      <ion-col>{{dtlRow.PaymentPrice}}</ion-col>
+    </ion-row>
+    <ion-row *ngFor="let dtlRow of DetailReport" class="ion-hide-md-up" appBorderControl>
+      <ion-col size-xs="12" size-sm="6">
+        <ion-text>Type:</ion-text><ion-text>{{dtlRow.Type}}</ion-text>
+      </ion-col>
+      <ion-col size-xs="12" size-sm="6">
+        <ion-text>Date:</ion-text><ion-text>{{dtlRow.Date}}</ion-text>
+      </ion-col>
+      <ion-col size-xs="12" size-sm="6">
+        <ion-text>FormSerial:</ion-text><ion-text>{{dtlRow.FormSerial}}</ion-text>
+      </ion-col>
+      <ion-col size-xs="12" size-sm="6">
+        <ion-text>ReceiptPrice:</ion-text><ion-text>{{dtlRow.ReceiptPrice}}</ion-text>
+      </ion-col>
+      <ion-col size-xs="12" size-sm="6">
+        <ion-text>PaymentPrice:</ion-text><ion-text>{{dtlRow.PaymentPrice}}</ion-text>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  
+  
+</ion-content>
